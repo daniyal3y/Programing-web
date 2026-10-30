@@ -1,0 +1,57 @@
+# Copy into /etc/nginx/nginx.conf and adapt the PHP-FPM socket and app root.
+# RAFFLE_LINK_SECRET must be provided to the Nginx master by systemd/container env.
+user www-data;
+worker_processes auto;
+error_log /var/log/nginx/error.log warn;
+pid /run/nginx.pid;
+env RAFFLE_LINK_SECRET;
+
+events { worker_connections 4096; }
+
+http {
+    js_engine qjs;
+    js_import raffle_guard from /etc/nginx/njs/raffle_guard.js;
+
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+    sendfile on;
+    tcp_nopush on;
+    keepalive_timeout 30;
+    server_tokens off;
+
+    limit_req_zone $binary_remote_addr zone=raffle_per_ip:10m rate=20r/s;
+
+    server {
+        listen 80;
+        server_name example.com;
+        root /var/www/raffle-link-platform/public;
+        index index.php;
+        charset utf-8;
+
+        # All /r/* requests are checked locally. Invalid paths/signatures end here.
+        location ^~ /r/ {
+            limit_req zone=raffle_per_ip burst=40 nodelay;
+            js_access raffle_guard.verify;
+            try_files $uri /index.php?$query_string;
+        }
+
+        location = /r { return 404; }
+
+        location / {
+            # Reject a signed-link fingerprint when its fixed prefix/path was altered.
+            js_access raffle_guard.rejectNonCanonicalRafflePath;
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location = /index.php {
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+            fastcgi_param DOCUMENT_ROOT $realpath_root;
+            fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+            fastcgi_read_timeout 30s;
+        }
+
+        location ~ \.php$ { return 404; }
+        location ~ /\. { deny all; }
+    }
+}
