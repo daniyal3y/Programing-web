@@ -3,7 +3,13 @@
     "name": "daniyal3y/raffle-link-platform",
     "type": "project",
     "description": "High-throughput raffle links with Nginx-side HMAC validation and atomic duplicate prevention.",
-    "keywords": ["laravel", "raffle", "nginx", "njs", "hmac"],
+    "keywords": [
+        "laravel",
+        "raffle",
+        "nginx",
+        "njs",
+        "hmac"
+    ],
     "license": "proprietary",
     "require": {
         "php": "^8.3",
@@ -33,12 +39,14 @@
             "@php artisan package:discover --ansi"
         ],
         "setup": [
-            "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
-            "@php artisan migrate --force"
+            "@php artisan migrate --seed"
         ],
-        "test": ["@php artisan config:clear", "@php artisan test"],
+        "test": [
+            "@php artisan config:clear",
+            "@php artisan test"
+        ],
         "lint": "./vendor/bin/pint --test"
     },
     "config": {
