@@ -20,6 +20,13 @@ function constantTimeEqual(left, right) {
     return mismatch === 0;
 }
 
+function hasCanonicalRequestTarget(r) {
+    // $request_uri is the original, unnormalized URI including query args.
+    // Requiring it to equal $uri disallows encoded paths, repeated slashes and query strings.
+    const original = (r.variables && r.variables.request_uri) || r.uri;
+    return original === r.uri;
+}
+
 function rejectNonCanonicalRafflePath(r) {
     // If a single character in the fixed /r/ prefix or separators is changed,
     // the intact token.signature fingerprint still identifies a tampered link.
@@ -29,6 +36,10 @@ function rejectNonCanonicalRafflePath(r) {
 }
 
 function verify(r) {
+    if (!hasCanonicalRequestTarget(r)) {
+        return deny(r);
+    }
+
     // Only these two endpoints are valid below /r/.
     const match = /^\/r\/([A-Za-z0-9_-]{22})\.([a-f0-9]{32})(?:\/entries)?$/.exec(r.uri);
     if (match === null) {
