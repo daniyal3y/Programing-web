@@ -171,11 +171,3 @@ config/                         # تنظیمات برنامه و raffle
  resources/views/               # رابط فارسی و راست‌چین
  tests/                         # Unit و Feature tests
 ```
-
-## اطلاعات تحویل دانشگاه
-
-- مخزن GitHub: `daniyal3y/Programing-web`
-- مسیر پروژه: `raffle-link-platform/`
-- حساب GitHub: `daniyal3y`
-- لینک پروژه: https://github.com/daniyal3y/Programing-web/tree/main/raffle-link-platform
-- کد دانشجویی: **پیش از ارسال در گروه، در `SUBMISSION.md` وارد شود.**
