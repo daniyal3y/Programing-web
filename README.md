@@ -25,8 +25,8 @@ Laravel 13 حداقل PHP 8.3 را نیاز دارد. در توسعه می‌ت�
 ## نصب و اجرای محلی
 
 ```bash
-git clone https://github.com/daniyal3y/raffle-link-platform.git
-cd raffle-link-platform
+git clone https://github.com/daniyal3y/Programing-web.git
+cd Programing-web/raffle-link-platform
 composer install
 cp .env.example .env
 php artisan key:generate
@@ -174,7 +174,8 @@ config/                         # تنظیمات برنامه و raffle
 
 ## اطلاعات تحویل دانشگاه
 
-- نام مخزن: `raffle-link-platform`
+- مخزن GitHub: `daniyal3y/Programing-web`
+- مسیر پروژه: `raffle-link-platform/`
 - حساب GitHub: `daniyal3y`
-- کد دانشجویی: **قبل از ارسال در گروه وارد شود**.
-- لینک مخزن: پس از ایجاد Repository خالی در GitHub و push کردن شاخه `main` درج شود.
+- لینک پروژه: https://github.com/daniyal3y/Programing-web/tree/main/raffle-link-platform
+- کد دانشجویی: **پیش از ارسال در گروه، در `SUBMISSION.md` وارد شود.**
