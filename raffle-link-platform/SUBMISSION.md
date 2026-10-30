@@ -3,7 +3,7 @@
 - تمرین: سامانه لینک اختصاصی قرعه‌کشی با Laravel و Nginx
 - مخزن GitHub: `daniyal3y/Programing-web`
 - مسیر پروژه: `raffle-link-platform/`
-- کد دانشجویی: `[کد دانشجویی خود را وارد کنید]`
+- کد دانشجویی: `در فرم تحویل دانشگاه درج شده است`
 - لینک مستقیم پروژه: https://github.com/daniyal3y/Programing-web/tree/main/raffle-link-platform
 
 ## کامیت‌های پروژه
