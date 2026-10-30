@@ -30,8 +30,8 @@ if (-not (Test-Path -LiteralPath (Join-Path $repo '.git'))) {
 
 Push-Location $repo
 try {
-    $top = (& git rev-parse --show-toplevel).Trim()
-    if ($LASTEXITCODE -ne 0 -or $top -ne $repo) {
+    $inside = (& git rev-parse --is-inside-work-tree).Trim()
+    if ($LASTEXITCODE -ne 0 -or $inside -ne 'true') {
         throw 'Repository path validation failed.'
     }
 
